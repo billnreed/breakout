@@ -7,11 +7,9 @@ import BricksGroup from '../groups/bricks';
 
 export default class extends Phaser.State {
   preload() {
-    this.load.crossOrigin = true;
-
-    this.load.spritesheet('ball', 'https://raw.githubusercontent.com/end3r/Gamedev-Phaser-Content-Kit/gh-pages/demos/img/wobble.png', 20, 20);
-    this.load.image('paddle', 'https://raw.githubusercontent.com/end3r/Gamedev-Phaser-Content-Kit/gh-pages/demos/img/paddle.png');
-    this.load.image('brick', 'https://raw.githubusercontent.com/end3r/Gamedev-Phaser-Content-Kit/gh-pages/demos/img/brick.png');
+    this.load.spritesheet('ball', 'assets/images/ball.png', 20, 20);
+    this.load.image('paddle', 'assets/images/paddle.png');
+    this.load.image('brick', 'assets/images/brick.png');
   }
 
   create() {
