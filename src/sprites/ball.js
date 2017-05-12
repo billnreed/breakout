@@ -30,4 +30,12 @@ export default class extends Phaser.Sprite {
     setWorldBoundsHitHandler(handler) {
         this.body.onWorldBounds.add(handler);
     }
+
+    playHitAnimation(horizontal, vertical) {
+      if (horizontal) {
+        this.animations.play('wobbleHorizontal');
+      } else if (vertical) {
+        this.animations.play('wobbleVertical');
+      }
+    }
 }

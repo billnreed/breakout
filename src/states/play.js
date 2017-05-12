@@ -33,7 +33,7 @@ export default class extends Phaser.State {
     this.livesText = this.addLivesText();
     this.startLifeText = this.addStartLifeText();
 
-    this.prepareNextLife();
+    this.prepareNextRound();
   }
 
   addLivesText() {
@@ -51,42 +51,41 @@ export default class extends Phaser.State {
     return text;
   }
 
-  prepareNextLife() {
+  prepareNextRound() {
     this.startLifeText.exists = true;
     this.updateLivesText();
     this.ball.resetRound();
-    this.input.onDown.addOnce(() => this.startLife());
+    this.input.onDown.addOnce(() => this.startRound());
   }
 
   updateLivesText() {
     this.livesText.setText(`Lives: ${this.lives}`);
   }
 
-  startLife() {
+  startRound() {
     this.startLifeText.exists = false;
     this.ball.startRound();
   }
 
   update() {
-    this.paddle.x = this.input.position.x;
+    this.paddle.alignToPointer(this.input.position.x);
 
     this.physics.arcade.collide(this.ball, this.paddle, () => this.handlePaddleHit());
     this.physics.arcade.collide(this.ball, this.bricks, (ball, brick) => this.handleBrickHit(brick));
   }
 
-  handleWorldBoundsHit(sprite, up, down, left, right) {
+  handleWorldBoundsHit(ball, up, down, left, right) {
     if (down) {
       this.lives -= 1;
-      this.prepareNextLife();
 
       if (this.lives === 0) {
         alert('you lose');
+      } else {
+        this.prepareNextRound();
       }
-    } else if (up) {
-      this.ball.animations.play('wobbleHorizontal');
-    } else if (left || right) {
-      this.ball.animations.play('wobbleVertical');
     }
+
+    this.ball.playHitAnimation(left || right, up || down);
   }
 
   handlePaddleHit() {
@@ -100,6 +99,7 @@ export default class extends Phaser.State {
 
     // between -1 and 1
     const normalizedDifferenceFactor = differenceFactor * 2;
+
     const normalizedDifferenceFactorMagnitude = Math.abs(normalizedDifferenceFactor);
 
     if ((this.ball.body.velocity.x < 0 && differenceFactor < 0) || (this.ball.body.velocity.x > 0 && differenceFactor > 0)) {
@@ -114,7 +114,6 @@ export default class extends Phaser.State {
     } else {
       this.ball.body.velocity.x = this.game.math.clamp(this.ball.body.velocity.x, 100, 250);
     }
-
   }
 
   handleBrickHit(brick) {

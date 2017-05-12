@@ -13,4 +13,8 @@ export default class extends Phaser.Sprite {
     positionInWorld() {
         this.alignIn(this.game.world.bounds, Phaser.BOTTOM_CENTER, 0, -40);
     }
+
+    alignToPointer(pointerX = this.game.world.centerX) {
+      this.x = pointerX;
+    }
 }
