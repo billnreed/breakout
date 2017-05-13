@@ -3,17 +3,18 @@ import Phaser from 'phaser'
 import Ball from '../sprites/ball';
 import Paddle from '../sprites/paddle';
 import BricksGroup from '../groups/bricks';
+import StartRoundText from '../text/start-round';
+import LivesText from '../text/lives';
 
 export default class extends Phaser.State {
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
-    this.lives = 3;
-
     this.createEntities();
-    this.initEntities();
+    this.positionEntities();
+    this.initEntityHandlers();
 
-    this.prepareNextRound();
+    this.prepareInitialRound();
   }
 
   createEntities() {
@@ -26,55 +27,38 @@ export default class extends Phaser.State {
     this.bricks = new BricksGroup(this.game);
     this.add.existing(this.bricks);
 
-    this.livesText = this.addLivesText();
-    this.startRoundText = this.addStartRoundText();
+    this.startRoundText = new StartRoundText(this.game);
+    this.add.existing(this.startRoundText);
+
+    this.livesText = new LivesText(this.game);
+    this.add.existing(this.livesText);
   }
 
-  initEntities() {
-    this.ball.setWorldBoundsHitHandler(this.handleWorldBoundsHit.bind(this));
-
+  positionEntities() {
     this.paddle.positionInWorld();
-
     this.bricks.positionInWorld();
+    this.startRoundText.positionInWorld();
+  }
+
+  initEntityHandlers() {
+    this.ball.onWorldBoundsHit.add(this.handleWorldBoundsHit.bind(this));
     this.bricks.onBrickDestroy.add(this.checkWin.bind(this));
   }
 
-  addLivesText() {
-    const text = this.make.text(10, 10, '', {
-      fill: '#ffffff',
-      font: 'monospace',
-      fontSize: '18px'
-    });
-    this.add.existing(text);
-
-    return text;
-  }
-
-  addStartRoundText() {
-    const text = this.make.text(0, 0, 'Click anywhere to start', {
-      fill: '#fff',
-      font: 'monospace',
-      fontSize: '18px'
-    });
-    text.alignIn(this.world.bounds, Phaser.BOTTOM_CENTER);
-    this.add.existing(text);
-
-    return text;
+  prepareInitialRound() {
+    this.lives = 3;
+    this.prepareNextRound();
   }
 
   prepareNextRound() {
-    this.startRoundText.exists = true;
-    this.updateLivesText();
+    this.startRoundText.show();
+    this.livesText.setLives(this.lives);
     this.ball.resetRound();
     this.input.onDown.addOnce(() => this.startRound());
   }
 
-  updateLivesText() {
-    this.livesText.setText(`Lives: ${this.lives}`);
-  }
-
   startRound() {
-    this.startRoundText.exists = false;
+    this.startRoundText.hide();
     this.ball.startRound();
   }
 
