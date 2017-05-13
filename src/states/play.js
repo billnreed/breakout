@@ -10,23 +10,33 @@ export default class extends Phaser.State {
 
     this.lives = 3;
 
+    this.createEntities();
+    this.initEntities();
+
+    this.prepareNextRound();
+  }
+
+  createEntities() {
     this.ball = new Ball(this.game);
     this.add.existing(this.ball);
-    this.ball.setWorldBoundsHitHandler(this.handleWorldBoundsHit.bind(this));
 
     this.paddle = new Paddle(this.game);
     this.add.existing(this.paddle);
-    this.paddle.positionInWorld();
 
     this.bricks = new BricksGroup(this.game);
     this.add.existing(this.bricks);
-    this.bricks.positionInWorld();
-    this.bricks.setBrickDestroyHandler(this.checkWin.bind(this));
 
     this.livesText = this.addLivesText();
     this.startLifeText = this.addStartLifeText();
+  }
 
-    this.prepareNextRound();
+  initEntities() {
+    this.ball.setWorldBoundsHitHandler(this.handleWorldBoundsHit.bind(this));
+
+    this.paddle.positionInWorld();
+
+    this.bricks.positionInWorld();
+    this.bricks.setBrickDestroyHandler(this.checkWin.bind(this));
   }
 
   addLivesText() {
