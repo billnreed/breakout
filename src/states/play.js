@@ -79,7 +79,11 @@ export default class extends Phaser.State {
   }
 
   update() {
-    this.paddle.alignToPointer(this.input.position.x);
+    if (this.input.position.x) {
+      this.paddle.alignToPointer(this.input.position.x);
+    } else {
+      this.paddle.positionInWorld();
+    }
 
     this.physics.arcade.collide(this.ball, this.paddle, () => this.handlePaddleHit());
     this.physics.arcade.collide(this.ball, this.bricks, (ball, brick) => this.handleBrickHit(brick));
