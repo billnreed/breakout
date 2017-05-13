@@ -27,7 +27,7 @@ export default class extends Phaser.State {
     this.add.existing(this.bricks);
 
     this.livesText = this.addLivesText();
-    this.startLifeText = this.addStartLifeText();
+    this.startRoundText = this.addStartRoundText();
   }
 
   initEntities() {
@@ -46,7 +46,7 @@ export default class extends Phaser.State {
     return text;
   }
 
-  addStartLifeText() {
+  addStartRoundText() {
     const text = this.make.text(0, 0, 'Click anywhere to start', { fill: '#fff', font: 'monospace', fontSize: '18px'  });
     text.alignIn(this.world.bounds, Phaser.BOTTOM_CENTER);
     this.add.existing(text);
@@ -55,7 +55,7 @@ export default class extends Phaser.State {
   }
 
   prepareNextRound() {
-    this.startLifeText.exists = true;
+    this.startRoundText.exists = true;
     this.updateLivesText();
     this.ball.resetRound();
     this.input.onDown.addOnce(() => this.startRound());
@@ -66,7 +66,7 @@ export default class extends Phaser.State {
   }
 
   startRound() {
-    this.startLifeText.exists = false;
+    this.startRoundText.exists = false;
     this.ball.startRound();
   }
 
