@@ -36,18 +36,26 @@ export default class extends Phaser.State {
     this.paddle.positionInWorld();
 
     this.bricks.positionInWorld();
-    this.bricks.setBrickDestroyHandler(this.checkWin.bind(this));
+    this.bricks.onBrickDestroy.add(this.checkWin.bind(this));
   }
 
   addLivesText() {
-    const text = this.make.text(10, 10, '', { fill: '#ffffff', font: 'monospace', fontSize: '18px' });
+    const text = this.make.text(10, 10, '', {
+      fill: '#ffffff',
+      font: 'monospace',
+      fontSize: '18px'
+    });
     this.add.existing(text);
 
     return text;
   }
 
   addStartRoundText() {
-    const text = this.make.text(0, 0, 'Click anywhere to start', { fill: '#fff', font: 'monospace', fontSize: '18px'  });
+    const text = this.make.text(0, 0, 'Click anywhere to start', {
+      fill: '#fff',
+      font: 'monospace',
+      fontSize: '18px'
+    });
     text.alignIn(this.world.bounds, Phaser.BOTTOM_CENTER);
     this.add.existing(text);
 
@@ -120,11 +128,7 @@ export default class extends Phaser.State {
   }
 
   handleBrickHit(brick) {
-    const destroyTween = this.add.tween(brick.scale);
-    destroyTween.to(new Phaser.Point(0, 0), 200)
-      .easing(Phaser.Easing.Back.In)
-      .onComplete.addOnce(() => brick.destroy());
-    destroyTween.start();
+    this.bricks.destroyBrick(brick);
   }
 
   checkWin() {

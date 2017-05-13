@@ -7,6 +7,8 @@ export default class extends Phaser.Group  {
         this.createMultiple(24, 'brick', 0, true);
         this.setAll('body.immovable', true);
         this.forEach(brick => brick.anchor.set(0.5, 0.5));
+
+        this.onBrickDestroy = new Phaser.Signal();
     }
 
     positionInWorld() {
@@ -14,7 +16,17 @@ export default class extends Phaser.Group  {
         this.alignIn(this.game.world.bounds, Phaser.TOP_CENTER, 0, -50);
     }
 
-    setBrickDestroyHandler(handler) {
-        this.forEach(brick => brick.events.onDestroy.add(handler));
+    destroyBrick(brick) {
+        const destroyTween = this.game.add.tween(brick.scale);
+        destroyTween.to(new Phaser.Point(0, 0), 200)
+          .easing(Phaser.Easing.Back.In)
+          .onComplete.addOnce(() => brick.destroy());
+        destroyTween.start();
+
+        this.onBrickDestroy.dispatch();
     }
+
+    // setBrickDestroyHandler(handler) {
+        // this.forEach(brick => brick.events.onDestroy.add(handler));
+    // }
 }
