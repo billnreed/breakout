@@ -1,4 +1,3 @@
-/* globals __DEV__ */
 import Phaser from 'phaser'
 
 import Ball from '../sprites/ball';
@@ -6,12 +5,6 @@ import Paddle from '../sprites/paddle';
 import BricksGroup from '../groups/bricks';
 
 export default class extends Phaser.State {
-  preload() {
-    this.load.spritesheet('ball', 'assets/images/ball.png', 20, 20);
-    this.load.image('paddle', 'assets/images/paddle.png');
-    this.load.image('brick', 'assets/images/brick.png');
-  }
-
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
