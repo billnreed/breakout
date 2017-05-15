@@ -10,7 +10,7 @@ export default class extends Phaser.Text {
   }
 
   positionInWorld() {
-    this.alignIn(this.game.world.bounds, Phaser.BOTTOM_CENTER);
+    this.alignIn(this.game.world.bounds, Phaser.CENTER, 0, 50);
   }
 
   hide() {

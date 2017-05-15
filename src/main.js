@@ -9,7 +9,7 @@ import LoseState from './states/lose';
 
 class Game extends Phaser.Game {
   constructor() {
-    super(640, 480, Phaser.AUTO, 'game', null)
+    super(550, 400, Phaser.AUTO, 'game', null)
 
     this.state.add('load', LoadState, false)
     this.state.add('play', PlayState, false)
