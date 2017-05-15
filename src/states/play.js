@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
 import level from 'data/level3';
-import BricksFactory from 'src/factories/bricks-factory';
+import LevelLoader from 'src/util/level-loader';
 
 import Ball from 'src/sprites/ball';
 import Paddle from 'src/sprites/paddle';
@@ -14,6 +14,7 @@ export default class extends Phaser.State {
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
     this.loadLevel();
+
     this.createEntities();
     this.positionEntities();
     this.initEntityHandlers();
@@ -22,25 +23,15 @@ export default class extends Phaser.State {
   }
 
   loadLevel() {
-    if (level.type === 'auto-grid') {
-      const bricksRows = level.rows;
-      const bricksColumns = level.columns;
-      const bricksCount = bricksRows * bricksColumns;
+    const levelLoader = new LevelLoader(this.game);
+    levelLoader.load(level);
 
-      this.bricks = BricksFactory.createBrickAutoGrid(this.game, bricksRows, bricksColumns);
-    } else if (level.type === 'explicit-grid') {
-      const bricksVisibilities = level.bricks;
-      const bricksRows = bricksVisibilities.length;
-      const bricksColumns = bricksVisibilities[0].length;
-
-      this.bricks = BricksFactory.createBrickExplicitGrid(this.game, bricksRows, bricksColumns, bricksVisibilities);
-    }
-
-    this.add.existing(this.bricks);
-    this.bricks.positionInWorld();
+    this.bricks = levelLoader.bricks;
   }
 
   createEntities() {
+    this.add.existing(this.bricks);
+
     this.ball = new Ball(this.game);
     this.add.existing(this.ball);
 
@@ -55,6 +46,7 @@ export default class extends Phaser.State {
   }
 
   positionEntities() {
+    this.bricks.positionInWorld();
     this.paddle.positionInWorld();
     this.startRoundText.positionInWorld();
   }
