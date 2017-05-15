@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
 
-import level from 'data/level3';
 import LevelLoader from 'src/util/level-loader';
 
 import Ball from 'src/sprites/ball';
@@ -24,7 +23,7 @@ export default class extends Phaser.State {
 
   loadLevel() {
     const levelLoader = new LevelLoader(this.game);
-    levelLoader.load(level);
+    levelLoader.load(LevelLoader.LEVEL_1);
 
     this.bricks = levelLoader.bricks;
   }
