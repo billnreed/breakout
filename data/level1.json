@@ -1,5 +1,5 @@
 {
-  "bricksCount": 24,
+  "type": "auto-grid",
   "rows": 4,
   "columns": 6
 }

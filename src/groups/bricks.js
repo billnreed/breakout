@@ -16,7 +16,25 @@ export default class extends Phaser.Group {
   }
 
   setGrid(rows, columns) {
+    this.rows = rows;
+    this.columns = columns;
     this.align(columns, rows, this.BRICK_WIDTH + this.BRICK_PADDING, this.BRICK_HEIGHT + this.BRICK_PADDING, Phaser.CENTER);
+  }
+
+  setBrickVisibilities(visibilities) {
+    visibilities.forEach((row, rowIndex) => {
+      row.forEach((visibility, columnIndex) => {
+        const brick = this.getBrickAt(rowIndex, columnIndex);
+        if (visibility === 0) {
+          brick.exists = false;
+        }
+      });
+    });
+  }
+
+  getBrickAt(row, column) {
+    const index = (row * this.columns) + column;
+    return this.children[index];
   }
 
   positionInWorld() {

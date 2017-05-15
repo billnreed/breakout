@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-import level1 from 'data/level1';
+import level from 'data/level2';
 
 import Ball from 'src/sprites/ball';
 import Paddle from 'src/sprites/paddle';
@@ -21,14 +21,32 @@ export default class extends Phaser.State {
   }
 
   loadLevel() {
-    const bricksCount = level1.bricksCount;
-    const bricksRows = level1.rows;
-    const bricksColumns = level1.columns;
+    if (level.type === 'auto-grid') {
+      const bricksRows = level.rows;
+      const bricksColumns = level.columns;
+      const bricksCount = bricksRows * bricksColumns;
 
-    this.bricks = new BricksGroup(this.game, bricksCount);
-    this.add.existing(this.bricks);
-    this.bricks.setGrid(bricksRows, bricksColumns);
-    this.bricks.positionInWorld();
+      this.bricks = this.createBrickGrid(bricksRows, bricksColumns);
+      this.add.existing(this.bricks);
+      this.bricks.positionInWorld();
+    } else if (level.type === 'explicit-grid') {
+      const bricksVisibilities = level.bricks;
+      const bricksRows = bricksVisibilities.length;
+      const bricksColumns = bricksVisibilities[0].length;
+
+      this.bricks = this.createBrickGrid(bricksRows, bricksColumns);
+      this.add.existing(this.bricks);
+      this.bricks.setBrickVisibilities(bricksVisibilities);
+      this.bricks.positionInWorld();
+    }
+  }
+
+  createBrickGrid(rows, columns) {
+    const count = rows * columns;
+    const grid = new BricksGroup(this.game, count);
+    grid.setGrid(rows, columns);
+
+    return grid;
   }
 
   createEntities() {
