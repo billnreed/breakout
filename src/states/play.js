@@ -123,7 +123,7 @@ export default class extends Phaser.State {
     const bricksLeftCount = this.bricks.children.length - 1;
 
     if (bricksLeftCount === 0) {
-      alert('you win');
+      this.game.state.start('win');
     }
   }
 }
