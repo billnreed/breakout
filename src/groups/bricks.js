@@ -4,6 +4,10 @@ export default class extends Phaser.Group {
   constructor(game, bricksCount) {
     super(game, null, 'bricks', false, true, Phaser.Physics.ARCADE);
 
+    this.BRICK_WIDTH = 50;
+    this.BRICK_HEIGHT = 20;
+    this.BRICK_PADDING = 10;
+
     this.createMultiple(bricksCount, 'brick', 0, true);
     this.setAll('body.immovable', true);
     this.forEach(brick => brick.anchor.set(0.5, 0.5));
@@ -12,7 +16,7 @@ export default class extends Phaser.Group {
   }
 
   setGrid(rows, columns) {
-    this.align(columns, rows, 50 + 10, 20 + 10, Phaser.CENTER);
+    this.align(columns, rows, this.BRICK_WIDTH + this.BRICK_PADDING, this.BRICK_HEIGHT + this.BRICK_PADDING, Phaser.CENTER);
   }
 
   positionInWorld() {
