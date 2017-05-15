@@ -78,7 +78,7 @@ export default class extends Phaser.State {
       this.lives -= 1;
 
       if (this.lives === 0) {
-        alert('you lose');
+        this.game.state.start('lose');
       } else {
         this.prepareNextRound();
       }
