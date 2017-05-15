@@ -2,10 +2,10 @@ import 'pixi'
 import 'p2'
 import Phaser from 'phaser'
 
-import LoadState from './states/load';
-import PlayState from './states/play';
-import WinState from './states/win';
-import LoseState from './states/lose';
+import LoadState from 'src/states/load';
+import PlayState from 'src/states/play';
+import WinState from 'src/states/win';
+import LoseState from 'src/states/lose';
 
 class Game extends Phaser.Game {
   constructor() {

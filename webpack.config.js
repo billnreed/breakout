@@ -30,7 +30,10 @@ module.exports = {
   watch: true,
   plugins: [
     definePlugin,
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor'/* chunkName= */, filename: 'vendor.bundle.js'/* filename= */}),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor' /* chunkName= */ ,
+      filename: 'vendor.bundle.js' /* filename= */
+    }),
     new BrowserSyncPlugin({
       host: process.env.IP || 'localhost',
       port: process.env.PORT || 3000,
@@ -41,10 +44,23 @@ module.exports = {
   ],
   module: {
     rules: [
-      { test: /\.js$/, use: ['babel-loader'], include: path.join(__dirname, 'src') },
-      { test: /pixi\.js/, use: ['expose-loader?PIXI'] },
-      { test: /phaser-split\.js$/, use: ['expose-loader?Phaser'] },
-      { test: /p2\.js/, use: ['expose-loader?p2'] }
+      {
+        test: /\.js$/,
+        use: ['babel-loader'],
+        include: path.join(__dirname, 'src')
+      },
+      {
+        test: /pixi\.js/,
+        use: ['expose-loader?PIXI']
+      },
+      {
+        test: /phaser-split\.js$/,
+        use: ['expose-loader?Phaser']
+      },
+      {
+        test: /p2\.js/,
+        use: ['expose-loader?p2']
+      }
     ]
   },
   node: {
@@ -56,7 +72,9 @@ module.exports = {
     alias: {
       'phaser': phaser,
       'pixi': pixi,
-      'p2': p2
+      'p2': p2,
+      'src': path.resolve(__dirname, 'src'),
+      'data': path.resolve(__dirname, 'data')
     }
   }
 }

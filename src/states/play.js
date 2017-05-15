@@ -1,10 +1,10 @@
 import Phaser from 'phaser'
 
-import Ball from '../sprites/ball';
-import Paddle from '../sprites/paddle';
-import BricksGroup from '../groups/bricks';
-import StartRoundText from '../text/start-round';
-import LivesText from '../text/lives';
+import Ball from 'src/sprites/ball';
+import Paddle from 'src/sprites/paddle';
+import BricksGroup from 'src/groups/bricks';
+import StartRoundText from 'src/text/start-round';
+import LivesText from 'src/text/lives';
 
 export default class extends Phaser.State {
   create() {
