@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-import level from 'data/level2';
+import level from 'data/level3';
 import BricksFactory from 'src/factories/bricks-factory';
 
 import Ball from 'src/sprites/ball';

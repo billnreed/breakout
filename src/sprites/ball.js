@@ -25,7 +25,7 @@ export default class extends Phaser.Sprite {
 
   resetRound() {
     this.body.velocity.set(0, 0);
-    this.alignIn(this.game.world.bounds, Phaser.CENTER);
+    this.alignIn(this.game.world.bounds, Phaser.CENTER, 0, 40);
   }
 
   playHitAnimation(horizontal, vertical) {
