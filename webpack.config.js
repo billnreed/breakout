@@ -75,6 +75,7 @@ module.exports = {
       'p2': p2,
       'src': path.resolve(__dirname, 'src'),
       'data': path.resolve(__dirname, 'data')
-    }
+    },
+    extensions: ['.js', '.json']
   }
 }

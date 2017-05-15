@@ -1,5 +1,7 @@
 import Phaser from 'phaser'
 
+import level1 from 'data/level1';
+
 import Ball from 'src/sprites/ball';
 import Paddle from 'src/sprites/paddle';
 import BricksGroup from 'src/groups/bricks';
@@ -10,11 +12,23 @@ export default class extends Phaser.State {
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
+    this.loadLevel();
     this.createEntities();
     this.positionEntities();
     this.initEntityHandlers();
 
     this.prepareInitialRound();
+  }
+
+  loadLevel() {
+    const bricksCount = level1.bricksCount;
+    const bricksRows = level1.rows;
+    const bricksColumns = level1.columns;
+
+    this.bricks = new BricksGroup(this.game, bricksCount);
+    this.add.existing(this.bricks);
+    this.bricks.setGrid(bricksRows, bricksColumns);
+    this.bricks.positionInWorld();
   }
 
   createEntities() {
@@ -23,9 +37,6 @@ export default class extends Phaser.State {
 
     this.paddle = new Paddle(this.game);
     this.add.existing(this.paddle);
-
-    this.bricks = new BricksGroup(this.game);
-    this.add.existing(this.bricks);
 
     this.startRoundText = new StartRoundText(this.game);
     this.add.existing(this.startRoundText);
@@ -36,7 +47,6 @@ export default class extends Phaser.State {
 
   positionEntities() {
     this.paddle.positionInWorld();
-    this.bricks.positionInWorld();
     this.startRoundText.positionInWorld();
   }
 
