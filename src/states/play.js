@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 
 import level from 'data/level2';
+import BricksFactory from 'src/factories/bricks-factory';
 
 import Ball from 'src/sprites/ball';
 import Paddle from 'src/sprites/paddle';
@@ -26,27 +27,17 @@ export default class extends Phaser.State {
       const bricksColumns = level.columns;
       const bricksCount = bricksRows * bricksColumns;
 
-      this.bricks = this.createBrickGrid(bricksRows, bricksColumns);
-      this.add.existing(this.bricks);
-      this.bricks.positionInWorld();
+      this.bricks = BricksFactory.createBrickAutoGrid(this.game, bricksRows, bricksColumns);
     } else if (level.type === 'explicit-grid') {
       const bricksVisibilities = level.bricks;
       const bricksRows = bricksVisibilities.length;
       const bricksColumns = bricksVisibilities[0].length;
 
-      this.bricks = this.createBrickGrid(bricksRows, bricksColumns);
-      this.add.existing(this.bricks);
-      this.bricks.setBrickVisibilities(bricksVisibilities);
-      this.bricks.positionInWorld();
+      this.bricks = BricksFactory.createBrickExplicitGrid(this.game, bricksRows, bricksColumns, bricksVisibilities);
     }
-  }
 
-  createBrickGrid(rows, columns) {
-    const count = rows * columns;
-    const grid = new BricksGroup(this.game, count);
-    grid.setGrid(rows, columns);
-
-    return grid;
+    this.add.existing(this.bricks);
+    this.bricks.positionInWorld();
   }
 
   createEntities() {
