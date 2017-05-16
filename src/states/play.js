@@ -9,6 +9,9 @@ import StartRoundText from 'src/text/start-round';
 import LivesText from 'src/text/lives';
 
 export default class extends Phaser.State {
+  init({ levelData }) {
+    this.levelData = levelData;
+  }
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -23,7 +26,7 @@ export default class extends Phaser.State {
 
   loadLevel() {
     const levelLoader = new LevelLoader(this.game);
-    levelLoader.load(LevelLoader.LEVEL_1);
+    levelLoader.load(this.levelData);
 
     this.bricks = levelLoader.bricks;
   }
@@ -130,7 +133,7 @@ export default class extends Phaser.State {
   }
 
   checkWin() {
-    const bricksLeftCount = this.bricks.children.length - 1;
+    const bricksLeftCount = this.bricks.filter(() => true, true).total - 1;
 
     if (bricksLeftCount === 0) {
       this.game.state.start('win');

@@ -1,7 +1,3 @@
-import level1 from 'data/level1';
-import level2 from 'data/level2';
-import level3 from 'data/level3';
-
 import BricksFactory from 'src/factories/bricks-factory';
 
 class LevelLoader {
@@ -27,9 +23,5 @@ class LevelLoader {
     }
   }
 }
-
-LevelLoader.LEVEL_1 = level1;
-LevelLoader.LEVEL_2 = level2;
-LevelLoader.LEVEL_3 = level3;
 
 export default LevelLoader;
