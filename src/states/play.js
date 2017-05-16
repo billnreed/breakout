@@ -133,7 +133,7 @@ export default class extends Phaser.State {
   }
 
   checkWin() {
-    const bricksLeftCount = this.bricks.filter(() => true, true).total - 1;
+    const bricksLeftCount = this.bricks.getAll('exists', true).length - 1;
 
     if (bricksLeftCount === 0) {
       this.game.state.start('win');

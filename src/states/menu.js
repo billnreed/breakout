@@ -24,6 +24,8 @@ class MenuState extends Phaser.State {
     this.level1Text = this.make.text(0, 0, 'Level 1', levelTextStyle);
     this.level2Text = this.make.text(0, 0, 'Level 2', levelTextStyle);
     this.level3Text = this.make.text(0, 0, 'Level 3', levelTextStyle);
+
+    this.levelButtonsGroup.inputEnableChildren = true;
     this.levelButtonsGroup.add(this.level1Text);
     this.levelButtonsGroup.add(this.level2Text);
     this.levelButtonsGroup.add(this.level3Text);
@@ -32,10 +34,6 @@ class MenuState extends Phaser.State {
 
     this.levelButtonsGroup.align(3, 1, 150, 40, Phaser.CENTER);
     this.levelButtonsGroup.alignIn(this.game.world.bounds, Phaser.CENTER, 0, 0);
-
-    this.level1Text.inputEnabled = true;
-    this.level2Text.inputEnabled = true;
-    this.level3Text.inputEnabled = true;
 
     this.level1Text.events.onInputDown.add(() => this.game.state.start('play', true, false, { levelData: level1 }))
     this.level2Text.events.onInputDown.add(() => this.game.state.start('play', true, false, { levelData: level2 }))
