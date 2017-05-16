@@ -8,11 +8,13 @@ import BricksGroup from 'src/groups/bricks';
 import StartRoundText from 'src/gui/start-round';
 import LivesText from 'src/gui/lives';
 
+import PaddleBallCollisionHandler from 'src/collision-handlers/paddle-ball-collision-handler';
+
 export default class extends Phaser.State {
   init({ levelData }) {
     this.levelData = levelData;
   }
-  
+
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -21,6 +23,7 @@ export default class extends Phaser.State {
     this.createEntities();
     this.positionEntities();
     this.initEntityHandlers();
+    this.initCollisionHandlers();
 
     this.prepareInitialRound();
   }
@@ -57,6 +60,10 @@ export default class extends Phaser.State {
   initEntityHandlers() {
     this.ball.onWorldBoundsHit.add(this.handleWorldBoundsHit.bind(this));
     this.bricks.onBrickDestroy.add(this.checkWin.bind(this));
+  }
+
+  initCollisionHandlers() {
+    this.paddleBallCollisionHandler = new PaddleBallCollisionHandler(this.game, this.paddle, this.ball);
   }
 
   prepareInitialRound() {
@@ -104,29 +111,7 @@ export default class extends Phaser.State {
   handlePaddleHit() {
     this.ball.animations.play('wobbleHorizontal');
 
-    // positive if ball is to the right of paddle center, negative if ball is to the left
-    const centerDifference = (this.ball.x - this.paddle.x);
-
-    // between -0.5 and 0.5
-    const differenceFactor = centerDifference / this.paddle.width;
-
-    // between -1 and 1
-    const normalizedDifferenceFactor = differenceFactor * 2;
-
-    const normalizedDifferenceFactorMagnitude = Math.abs(normalizedDifferenceFactor);
-
-    if ((this.ball.body.velocity.x < 0 && differenceFactor < 0) || (this.ball.body.velocity.x > 0 && differenceFactor > 0)) {
-      this.ball.body.velocity.x *= normalizedDifferenceFactorMagnitude * 2;
-    } else {
-      this.ball.body.velocity.x *= -1;
-      this.ball.body.velocity.x *= normalizedDifferenceFactorMagnitude;
-    }
-
-    if (this.ball.body.velocity.x < 0) {
-      this.ball.body.velocity.x = this.game.math.clamp(this.ball.body.velocity.x, -250, -100);
-    } else {
-      this.ball.body.velocity.x = this.game.math.clamp(this.ball.body.velocity.x, 100, 250);
-    }
+    this.paddleBallCollisionHandler.handle();
   }
 
   handleBrickHit(brick) {
