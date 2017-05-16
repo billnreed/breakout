@@ -1,18 +1,23 @@
 import Phaser from 'phaser'
 
-import level1 from 'data/level1';
+import LevelLoader from 'src/util/level-loader';
 
 import Ball from 'src/sprites/ball';
 import Paddle from 'src/sprites/paddle';
 import BricksGroup from 'src/groups/bricks';
-import StartRoundText from 'src/text/start-round';
-import LivesText from 'src/text/lives';
+import StartRoundText from 'src/gui/start-round';
+import LivesText from 'src/gui/lives';
 
 export default class extends Phaser.State {
+  init({ levelData }) {
+    this.levelData = levelData;
+  }
+  
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
     this.loadLevel();
+
     this.createEntities();
     this.positionEntities();
     this.initEntityHandlers();
@@ -21,17 +26,15 @@ export default class extends Phaser.State {
   }
 
   loadLevel() {
-    const bricksCount = level1.bricksCount;
-    const bricksRows = level1.rows;
-    const bricksColumns = level1.columns;
+    const levelLoader = new LevelLoader(this.game);
+    levelLoader.load(this.levelData);
 
-    this.bricks = new BricksGroup(this.game, bricksCount);
-    this.add.existing(this.bricks);
-    this.bricks.setGrid(bricksRows, bricksColumns);
-    this.bricks.positionInWorld();
+    this.bricks = levelLoader.bricks;
   }
 
   createEntities() {
+    this.add.existing(this.bricks);
+
     this.ball = new Ball(this.game);
     this.add.existing(this.ball);
 
@@ -46,6 +49,7 @@ export default class extends Phaser.State {
   }
 
   positionEntities() {
+    this.bricks.positionInWorld();
     this.paddle.positionInWorld();
     this.startRoundText.positionInWorld();
   }
@@ -130,7 +134,7 @@ export default class extends Phaser.State {
   }
 
   checkWin() {
-    const bricksLeftCount = this.bricks.children.length - 1;
+    const bricksLeftCount = this.bricks.getAll('exists', true).length - 1;
 
     if (bricksLeftCount === 0) {
       this.game.state.start('win');

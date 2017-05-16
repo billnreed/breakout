@@ -14,6 +14,6 @@ export default class extends Phaser.State {
     const playAgainText = this.add.text(0, 0, 'Click anywhere to play again.', textStyle);
     playAgainText.alignIn(this.world.bounds, Phaser.CENTER, 0, 30);
 
-    this.game.input.onDown.addOnce(() => this.game.state.start('play'));
+    this.game.input.onDown.addOnce(() => this.game.state.start('menu'));
   }
 }

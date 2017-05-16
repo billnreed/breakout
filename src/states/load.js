@@ -8,6 +8,6 @@ export default class extends Phaser.State {
     }
 
     create() {
-        this.game.state.start('play');
+        this.game.state.start('menu');
     }
 }
