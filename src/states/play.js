@@ -5,13 +5,14 @@ import LevelLoader from 'src/util/level-loader';
 import Ball from 'src/sprites/ball';
 import Paddle from 'src/sprites/paddle';
 import BricksGroup from 'src/groups/bricks';
-import StartRoundText from 'src/text/start-round';
-import LivesText from 'src/text/lives';
+import StartRoundText from 'src/gui/start-round';
+import LivesText from 'src/gui/lives';
 
 export default class extends Phaser.State {
   init({ levelData }) {
     this.levelData = levelData;
   }
+  
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
