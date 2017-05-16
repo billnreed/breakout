@@ -11,7 +11,7 @@ export default class extends Phaser.Group {
     this.createMultiple(bricksCount, 'brick', 0, true);
     this.setAll('body.immovable', true);
     this.forEach(brick => brick.anchor.set(0.5, 0.5));
-    this.forEach(brick => brick.tint = 0xDEADBEEF);
+    this.setAll('tint', 0xBEEFED);
 
     this.onBrickDestroy = new Phaser.Signal();
   }
