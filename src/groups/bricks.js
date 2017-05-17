@@ -1,17 +1,18 @@
 import Phaser from 'phaser';
 
+import { Brick } from 'src/sprites/brick';
+
 export class Bricks extends Phaser.Group {
   constructor(game, bricksCount) {
     super(game, null, 'bricks', false, true, Phaser.Physics.ARCADE);
+    this.classType = Brick;
 
     this.BRICK_WIDTH = 50;
     this.BRICK_HEIGHT = 20;
     this.BRICK_PADDING = 10;
 
-    this.createMultiple(bricksCount, 'brick', 0, true);
-    this.setAll('body.immovable', true);
-    this.forEach(brick => brick.anchor.set(0.5, 0.5));
-    this.setAll('tint', 0xBEEFED);
+    this.createMultiple(bricksCount);
+    this.callAll('init');
 
     this.onBrickDestroy = new Phaser.Signal();
   }
