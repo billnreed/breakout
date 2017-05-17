@@ -11,7 +11,9 @@ import LivesText from 'src/gui/lives';
 import PaddleBallCollisionHandler from 'src/collision-handlers/paddle-ball-collision-handler';
 
 export default class extends Phaser.State {
-  init({ levelData }) {
+  init({
+    levelData
+  }) {
     this.levelData = levelData;
   }
 
@@ -24,6 +26,8 @@ export default class extends Phaser.State {
     this.positionEntities();
     this.initEntityHandlers();
     this.initCollisionHandlers();
+
+    this.initInputHandlers();
 
     this.prepareInitialRound();
   }
@@ -66,6 +70,19 @@ export default class extends Phaser.State {
     this.paddleBallCollisionHandler = new PaddleBallCollisionHandler(this.game, this.paddle, this.ball);
   }
 
+  initInputHandlers() {
+    const inputKeys = this.input.keyboard.addKeys({
+      'left': Phaser.KeyCode.LEFT,
+      'right': Phaser.KeyCode.RIGHT,
+      'spacebar': Phaser.KeyCode.SPACEBAR,
+    });
+
+    this.paddle.setLeftInputKey(inputKeys.left);
+    this.paddle.setRightInputKey(inputKeys.right);
+
+    this.spaceKey = inputKeys.spacebar;
+  }
+
   prepareInitialRound() {
     this.lives = 3;
     this.prepareNextRound();
@@ -75,7 +92,7 @@ export default class extends Phaser.State {
     this.startRoundText.show();
     this.livesText.setLives(this.lives);
     this.ball.resetRound();
-    this.input.onDown.addOnce(() => this.startRound());
+    this.spaceKey.onUp.addOnce(() => this.startRound());
   }
 
   startRound() {
@@ -84,12 +101,6 @@ export default class extends Phaser.State {
   }
 
   update() {
-    if (this.input.position.x) {
-      this.paddle.alignToPointer(this.input.position.x);
-    } else {
-      this.paddle.positionInWorld();
-    }
-
     this.physics.arcade.collide(this.ball, this.paddle, () => this.handlePaddleHit());
     this.physics.arcade.collide(this.ball, this.bricks, (ball, brick) => this.handleBrickHit(brick));
   }
@@ -119,7 +130,8 @@ export default class extends Phaser.State {
   }
 
   checkWin() {
-    const bricksLeftCount = this.bricks.getAll('exists', true).length - 1;
+    const bricksLeftCount = this.bricks.getAll('exists', true)
+      .length - 1;
 
     if (bricksLeftCount === 0) {
       this.game.state.start('win');
