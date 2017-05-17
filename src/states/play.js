@@ -11,9 +11,7 @@ import LivesText from 'src/gui/lives';
 import PaddleBallCollisionHandler from 'src/collision-handlers/paddle-ball-collision-handler';
 
 export default class extends Phaser.State {
-  init({
-    levelData
-  }) {
+  init({ levelData }) {
     this.levelData = levelData;
   }
 
@@ -130,8 +128,7 @@ export default class extends Phaser.State {
   }
 
   checkWin() {
-    const bricksLeftCount = this.bricks.getAll('exists', true)
-      .length - 1;
+    const bricksLeftCount = this.bricks.getAll('exists', true).length - 1;
 
     if (bricksLeftCount === 0) {
       this.game.state.start('win');
