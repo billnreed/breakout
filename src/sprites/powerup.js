@@ -1,12 +1,13 @@
 import Phaser from 'phaser';
 
 export class Powerup extends Phaser.Sprite {
-  constructor(game, position) {
-    super(game, position.x, position.y, 'powerup');
+  constructor(game, x, y) {
+    super(game, x, y, 'powerup');
 
     this.anchor.set(0.5, 0.5);
+  }
 
-    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+  init() {
     this.body.velocity.y = 75;
   }
 

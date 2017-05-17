@@ -4,7 +4,8 @@ import { LevelLoader } from 'src/util/level-loader';
 
 import { Ball } from 'src/sprites/ball';
 import { Paddle } from 'src/sprites/paddle';
-import { Powerup } from 'src/sprites/powerup';
+
+import { Powerups } from 'src/groups/powerups';
 
 import { GUI } from 'src/gui/gui';
 
@@ -56,8 +57,7 @@ export class PlayState extends Phaser.State {
     this.paddle = new Paddle(this.game);
     this.add.existing(this.paddle);
 
-    // this.powerups = [];
-    this.powerups = new Phaser.Group(this.game);
+    this.powerups = new Powerups(this.game, this.powerupSpawnChance);
     this.add.existing(this.powerups);
   }
 
@@ -70,6 +70,7 @@ export class PlayState extends Phaser.State {
   initEntityHandlers() {
     this.ball.onWorldBoundsHit.add(this.handleWorldBoundsHit.bind(this));
     this.bricks.onBrickDestroy.add(this.checkWin.bind(this));
+    this.bricks.onBrickDestroy.add(this.powerups.spawnFromBrick.bind(this.powerups));
   }
 
   initCollisionHandlers() {
@@ -133,11 +134,6 @@ export class PlayState extends Phaser.State {
   }
 
   handleBrickHit(brick) {
-    if (this.rnd.frac() < this.powerupSpawnChance) {
-      const powerup = new Powerup(this.game, brick.worldPosition);
-      this.powerups.add(powerup);
-    }
-
     this.bricks.destroyBrick(brick);
   }
 

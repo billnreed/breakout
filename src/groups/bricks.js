@@ -43,12 +43,12 @@ export class Bricks extends Phaser.Group {
   }
 
   destroyBrick(brick) {
+    this.onBrickDestroy.dispatch(brick);
+
     const destroyTween = this.game.add.tween(brick.scale);
     destroyTween.to(new Phaser.Point(0, 0), 200)
       .easing(Phaser.Easing.Back.In)
       .onComplete.addOnce(() => brick.destroy());
     destroyTween.start();
-
-    this.onBrickDestroy.dispatch();
   }
 }
