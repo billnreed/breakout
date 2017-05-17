@@ -14,7 +14,7 @@ export class Powerups extends Phaser.Group {
     const { worldPosition: position } = brick;
     if (this.game.rnd.frac() < this.spawnChance) {
       const powerup = this.create(position.x, position.y);
-      powerup.init();
+      powerup.startMovement();
     }
   }
 }

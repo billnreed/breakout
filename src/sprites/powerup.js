@@ -7,7 +7,7 @@ export class Powerup extends Phaser.Sprite {
     this.anchor.set(0.5, 0.5);
   }
 
-  init() {
+  startMovement() {
     this.body.velocity.y = 75;
   }
 
