@@ -4,6 +4,7 @@ import LevelLoader from 'src/util/level-loader';
 
 import Ball from 'src/sprites/ball';
 import Paddle from 'src/sprites/paddle';
+import Powerup from 'src/sprites/powerup';
 import BricksGroup from 'src/groups/bricks';
 import StartRoundText from 'src/gui/start-round';
 import LivesText from 'src/gui/lives';
@@ -35,6 +36,7 @@ export default class extends Phaser.State {
     levelLoader.load(this.levelData);
 
     this.bricks = levelLoader.bricks;
+    this.powerupSpawnChance = levelLoader.powerupSpawnChance;
   }
 
   createEntities() {
@@ -45,6 +47,8 @@ export default class extends Phaser.State {
 
     this.paddle = new Paddle(this.game);
     this.add.existing(this.paddle);
+
+    this.powerups = [];
 
     this.startRoundText = new StartRoundText(this.game);
     this.add.existing(this.startRoundText);
@@ -101,6 +105,10 @@ export default class extends Phaser.State {
   update() {
     this.physics.arcade.collide(this.ball, this.paddle, () => this.handlePaddleHit());
     this.physics.arcade.collide(this.ball, this.bricks, (ball, brick) => this.handleBrickHit(brick));
+
+    this.powerups.forEach(powerup => {
+      this.physics.arcade.collide(this.paddle, powerup, (paddle, powerup) => this.handlePowerupHit(powerup));
+    });
   }
 
   handleWorldBoundsHit(ball, up, down, left, right) {
@@ -124,7 +132,18 @@ export default class extends Phaser.State {
   }
 
   handleBrickHit(brick) {
+    if (this.rnd.frac() < this.powerupSpawnChance) {
+      const powerup = new Powerup(this.game, brick.worldPosition);
+      this.powerups.push(powerup);
+      this.add.existing(powerup);
+    }
+
     this.bricks.destroyBrick(brick);
+  }
+
+  handlePowerupHit(powerup) {
+    powerup.activate();
+    powerup.destroy();
   }
 
   checkWin() {

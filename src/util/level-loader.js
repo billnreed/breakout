@@ -8,19 +8,27 @@ class LevelLoader {
   }
 
   load(level) {
-    if (level.type === 'auto-grid') {
-      const bricksRows = level.rows;
-      const bricksColumns = level.columns;
+    this.level = level;
+
+    this.loadGrid();
+    this.powerupSpawnChance = level.powerupSpawnChance;
+  }
+
+  loadGrid() {
+    if (this.level.type === 'auto-grid') {
+      const bricksRows = this.level.rows;
+      const bricksColumns = this.level.columns;
       const bricksCount = bricksRows * bricksColumns;
 
       this.bricks = BricksFactory.createBrickAutoGrid(this.game, bricksRows, bricksColumns);
-    } else if (level.type === 'explicit-grid') {
-      const bricksVisibilities = level.bricks;
+    } else if (this.level.type === 'explicit-grid') {
+      const bricksVisibilities = this.level.bricks;
       const bricksRows = bricksVisibilities.length;
       const bricksColumns = bricksVisibilities[0].length;
 
       this.bricks = BricksFactory.createBrickExplicitGrid(this.game, bricksRows, bricksColumns, bricksVisibilities);
     }
+
   }
 }
 
