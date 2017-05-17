@@ -1,9 +1,9 @@
-import { BricksGroup } from 'src/groups/bricks';
+import { Bricks} from 'src/groups/bricks';
 
-export const BricksFactory = {
+export const BrickGridFactory = {
   createBrickAutoGrid(game, rows, columns) {
     const count = rows * columns;
-    const grid = new BricksGroup(game, count);
+    const grid = new Bricks(game, count);
     grid.setGrid(rows, columns);
 
     return grid;
@@ -11,7 +11,7 @@ export const BricksFactory = {
 
   createBrickExplicitGrid(game, rows, columns, visibilities) {
     const count = rows * columns;
-    const grid = new BricksGroup(game, count);
+    const grid = new Bricks(game, count);
 
     grid.setGrid(rows, columns);
     grid.setBrickVisibilities(visibilities);

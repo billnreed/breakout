@@ -1,4 +1,4 @@
-import { BricksFactory } from 'src/factories/bricks-factory';
+import { BrickGridFactory } from 'src/factories/brick-grid-factory';
 
 export class LevelLoader {
   constructor(game) {
@@ -20,13 +20,13 @@ export class LevelLoader {
       const bricksColumns = this.level.columns;
       const bricksCount = bricksRows * bricksColumns;
 
-      this.bricks = BricksFactory.createBrickAutoGrid(this.game, bricksRows, bricksColumns);
+      this.bricks = BrickGridFactory.createBrickAutoGrid(this.game, bricksRows, bricksColumns);
     } else if (this.level.type === 'explicit-grid') {
       const bricksVisibilities = this.level.bricks;
       const bricksRows = bricksVisibilities.length;
       const bricksColumns = bricksVisibilities[0].length;
 
-      this.bricks = BricksFactory.createBrickExplicitGrid(this.game, bricksRows, bricksColumns, bricksVisibilities);
+      this.bricks = BrickGridFactory.createBrickExplicitGrid(this.game, bricksRows, bricksColumns, bricksVisibilities);
     }
 
   }
