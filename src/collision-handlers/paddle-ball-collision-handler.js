@@ -1,4 +1,4 @@
-export default class PaddleBallCollisionHandler {
+export class PaddleBallCollisionHandler {
   constructor(game, paddle, ball) {
     this.game = game;
     this.paddle = paddle;

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class extends Phaser.State {
+export class WinState extends Phaser.State {
   create() {
     const textStyle = {
       fill: '#fff',

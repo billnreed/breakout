@@ -1,6 +1,6 @@
-import BricksGroup from 'src/groups/bricks';
+import { BricksGroup } from 'src/groups/bricks';
 
-export default {
+export const BricksFactory = {
   createBrickAutoGrid(game, rows, columns) {
     const count = rows * columns;
     const grid = new BricksGroup(game, count);

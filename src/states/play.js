@@ -1,17 +1,16 @@
 import Phaser from 'phaser'
 
-import LevelLoader from 'src/util/level-loader';
+import { LevelLoader } from 'src/util/level-loader';
 
-import Ball from 'src/sprites/ball';
-import Paddle from 'src/sprites/paddle';
-import Powerup from 'src/sprites/powerup';
-import BricksGroup from 'src/groups/bricks';
-import StartRoundText from 'src/gui/start-round';
-import LivesText from 'src/gui/lives';
+import { Ball } from 'src/sprites/ball';
+import { Paddle } from 'src/sprites/paddle';
+import { Powerup } from 'src/sprites/powerup';
 
-import PaddleBallCollisionHandler from 'src/collision-handlers/paddle-ball-collision-handler';
+import { GUI } from 'src/gui/gui';
 
-export default class extends Phaser.State {
+import { PaddleBallCollisionHandler } from 'src/collision-handlers/paddle-ball-collision-handler';
+
+export class PlayState extends Phaser.State {
   init({ levelData }) {
     this.levelData = levelData;
   }
@@ -21,6 +20,7 @@ export default class extends Phaser.State {
 
     this.loadLevel();
 
+    this.createGUI();
     this.createEntities();
     this.positionEntities();
     this.initEntityHandlers();
@@ -39,6 +39,14 @@ export default class extends Phaser.State {
     this.powerupSpawnChance = levelLoader.powerupSpawnChance;
   }
 
+  createGUI() {
+    this.startRoundText = new GUI.StartRound(this.game);
+    this.add.existing(this.startRoundText);
+
+    this.livesText = new GUI.Lives(this.game);
+    this.add.existing(this.livesText);
+  }
+
   createEntities() {
     this.add.existing(this.bricks);
 
@@ -51,12 +59,6 @@ export default class extends Phaser.State {
     // this.powerups = [];
     this.powerups = new Phaser.Group(this.game);
     this.add.existing(this.powerups);
-
-    this.startRoundText = new StartRoundText(this.game);
-    this.add.existing(this.startRoundText);
-
-    this.livesText = new LivesText(this.game);
-    this.add.existing(this.livesText);
   }
 
   positionEntities() {

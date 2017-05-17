@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class extends Phaser.Text {
+export class StartRound extends Phaser.Text {
   constructor(game) {
     super(game, 0, 0, 'Press <SPACE> to start', {
       fill: '#fff',

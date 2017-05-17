@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class extends Phaser.State {
+export class LoadState extends Phaser.State {
     preload() {
         this.load.spritesheet('ball', 'assets/images/ball.png', 20, 20);
         this.load.image('paddle', 'assets/images/paddle.png');

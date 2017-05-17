@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class extends Phaser.Text {
+export class Lives extends Phaser.Text {
   constructor(game) {
     super(game, 10, 10, '', {
       fill: '#fff',

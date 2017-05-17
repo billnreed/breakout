@@ -1,6 +1,6 @@
-import BricksFactory from 'src/factories/bricks-factory';
+import { BricksFactory } from 'src/factories/bricks-factory';
 
-class LevelLoader {
+export class LevelLoader {
   constructor(game) {
     this.game = game;
 
@@ -31,5 +31,3 @@ class LevelLoader {
 
   }
 }
-
-export default LevelLoader;

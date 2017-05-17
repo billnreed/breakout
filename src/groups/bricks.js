@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class extends Phaser.Group {
+export class BricksGroup extends Phaser.Group {
   constructor(game, bricksCount) {
     super(game, null, 'bricks', false, true, Phaser.Physics.ARCADE);
 

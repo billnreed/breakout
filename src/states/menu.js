@@ -4,7 +4,7 @@ import level3 from 'data/level3';
 
 import Phaser from 'phaser';
 
-class MenuState extends Phaser.State {
+export class MenuState extends Phaser.State {
   create() {
     const instructionsTextStyle = {
       fill: '#fff',
@@ -40,5 +40,3 @@ class MenuState extends Phaser.State {
     this.level3Text.events.onInputDown.add(() => this.game.state.start('play', true, false, { levelData: level3 }))
   }
 }
-
-export default MenuState;
