@@ -48,7 +48,9 @@ export default class extends Phaser.State {
     this.paddle = new Paddle(this.game);
     this.add.existing(this.paddle);
 
-    this.powerups = [];
+    // this.powerups = [];
+    this.powerups = new Phaser.Group(this.game);
+    this.add.existing(this.powerups);
 
     this.startRoundText = new StartRoundText(this.game);
     this.add.existing(this.startRoundText);
@@ -105,10 +107,7 @@ export default class extends Phaser.State {
   update() {
     this.physics.arcade.collide(this.ball, this.paddle, () => this.handlePaddleHit());
     this.physics.arcade.collide(this.ball, this.bricks, (ball, brick) => this.handleBrickHit(brick));
-
-    this.powerups.forEach(powerup => {
-      this.physics.arcade.collide(this.paddle, powerup, (paddle, powerup) => this.handlePowerupHit(powerup));
-    });
+    this.physics.arcade.collide(this.paddle, this.powerups, (paddle, powerup) => this.handlePowerupHit(powerup));
   }
 
   handleWorldBoundsHit(ball, up, down, left, right) {
@@ -134,8 +133,7 @@ export default class extends Phaser.State {
   handleBrickHit(brick) {
     if (this.rnd.frac() < this.powerupSpawnChance) {
       const powerup = new Powerup(this.game, brick.worldPosition);
-      this.powerups.push(powerup);
-      this.add.existing(powerup);
+      this.powerups.add(powerup);
     }
 
     this.bricks.destroyBrick(brick);
