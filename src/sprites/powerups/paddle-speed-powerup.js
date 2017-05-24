@@ -1,16 +1,18 @@
-import Phaser from 'phaser';
-
 import { EntityConfig } from 'src/config/entity-config';
 
-export class Powerup extends Phaser.Sprite {
-  constructor(game, x, y) {
-    super(game, x, y, 'powerup');
+import { BasePowerup } from 'src/sprites/powerups/base-powerup';
 
-    this.anchor.set(0.5, 0.5);
+export class PaddleSpeedPowerup extends BasePowerup {
+  constructor(game, x, y) {
+    super(game, x, y);
   }
 
-  startMovement() {
-    this.body.velocity.y = 75;
+  makeIcon() {
+    const icon = this.game.make.sprite(0, 0, 'effect-icons/speed-up');
+    icon.anchor.set(0.5, 0.5);
+    icon.tint = 0xFFFFFF;
+
+    return icon;
   }
 
   activate() {
