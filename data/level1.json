@@ -2,5 +2,5 @@
   "type": "auto-grid",
   "rows": 4,
   "columns": 6,
-  "powerupSpawnChance": 1
+  "powerupSpawnChance": 0.15
 }

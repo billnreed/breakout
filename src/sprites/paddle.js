@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 
+import { EntityConfig } from 'src/config/entity-config';
+
 export class Paddle extends Phaser.Sprite {
   constructor(game) {
     super(game, 0, 0, 'paddle');
-
-    this.paddleSpeed = 200;
 
     this.anchor.set(0.5, 0.5);
 
@@ -29,6 +29,9 @@ export class Paddle extends Phaser.Sprite {
   }
 
   update() {
+    this.paddleSpeed = EntityConfig.paddle.speed;
+    this.tint = EntityConfig.paddle.tint;
+
     if (this.leftKey.isDown) {
       this.body.velocity.x = -1 * this.paddleSpeed;
     } else if (this.rightKey.isDown) {
