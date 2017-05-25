@@ -31,6 +31,7 @@ export class Paddle extends Phaser.Sprite {
   update() {
     this.paddleSpeed = EntityConfig.paddle.speed;
     this.tint = EntityConfig.paddle.tint;
+    this.width = EntityConfig.paddle.width;
 
     if (this.leftKey.isDown) {
       this.body.velocity.x = -1 * this.paddleSpeed;

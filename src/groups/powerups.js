@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
 
 import { PaddleSpeedPowerup } from 'src/sprites/powerups/paddle-speed-powerup';
+import { WiderPaddlePowerup } from 'src/sprites/powerups/wider-paddle-powerup';
 
 export class Powerups extends Phaser.Group {
   constructor(game, spawnChance) {
     super(game, null, 'powerups', false, true, Phaser.Physics.ARCADE);
-    this.classType = PaddleSpeedPowerup;
+    this.classType = WiderPaddlePowerup;
 
     this.spawnChance = spawnChance;
   }

@@ -3,11 +3,13 @@ export const EntityConfig = {
     paddle: {
       speed: 200,
       tint: 0xFFFFFF,
+      width: 75,
     },
   },
 
   paddle: {
     speed: 200,
     tint: 0xFFFFFF,
+    width: 75,
   },
 };

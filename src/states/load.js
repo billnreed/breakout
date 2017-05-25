@@ -8,6 +8,7 @@ export class LoadState extends Phaser.State {
         this.load.image('powerup', 'assets/images/powerup.png');
 
         this.load.image('effect-icons/speed-up', 'assets/images/effect-icons/speed-up.png');
+        this.load.image('effect-icons/wider-paddle', 'assets/images/effect-icons/wider-paddle.png');
     }
 
     create() {
