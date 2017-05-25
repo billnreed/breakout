@@ -1,10 +1,16 @@
 import { EntityConfig } from 'src/config/entity-config';
 
 import { BasePowerup } from 'src/sprites/powerups/base-powerup';
+import { Effect } from 'src/effects/effect';
 
 export class WiderPaddlePowerup extends BasePowerup {
   constructor(game, x, y) {
     super(game, x, y);
+
+    this.effect = new Effect('paddle', {
+      width: 150,
+      tint: 0x22CC33,
+    });
   }
 
   makeIcon() {
@@ -16,14 +22,12 @@ export class WiderPaddlePowerup extends BasePowerup {
   }
 
   activate() {
-    EntityConfig.paddle.width = 150;
-    EntityConfig.paddle.tint = 0x22CC44;
+    this.effect.activate();
 
-    this.game.time.events.add(3000, this.deactivate);
+    this.game.time.events.add(3000, this.deactivate.bind(this));
   }
 
   deactivate() {
-    EntityConfig.paddle.width = EntityConfig.defaults.paddle.width;
-    EntityConfig.paddle.tint = EntityConfig.defaults.paddle.tint;;
+    this.effect.deactivate();
   }
 }

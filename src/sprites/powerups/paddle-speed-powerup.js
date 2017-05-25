@@ -1,10 +1,16 @@
 import { EntityConfig } from 'src/config/entity-config';
 
 import { BasePowerup } from 'src/sprites/powerups/base-powerup';
+import { Effect } from 'src/effects/effect';
 
 export class PaddleSpeedPowerup extends BasePowerup {
   constructor(game, x, y) {
     super(game, x, y);
+
+    this.effect = new Effect('paddle', {
+      speed: 400,
+      tint: 0x22CC44,
+    });
   }
 
   makeIcon() {
@@ -16,14 +22,12 @@ export class PaddleSpeedPowerup extends BasePowerup {
   }
 
   activate() {
-    EntityConfig.paddle.speed = 400;
-    EntityConfig.paddle.tint = 0x22CC44;
+    this.effect.activate();
 
-    this.game.time.events.add(3000, this.deactivate);
+    this.game.time.events.add(3000, this.deactivate.bind(this));
   }
 
   deactivate() {
-    EntityConfig.paddle.speed = EntityConfig.defaults.paddle.speed;
-    EntityConfig.paddle.tint = EntityConfig.defaults.paddle.tint;;
+    this.effect.deactivate();
   }
 }
