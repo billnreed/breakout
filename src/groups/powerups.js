@@ -1,22 +1,30 @@
 import Phaser from 'phaser';
 
-import { PaddleSpeedPowerup } from 'src/sprites/powerups/paddle-speed-powerup';
-import { WiderPaddlePowerup } from 'src/sprites/powerups/wider-paddle-powerup';
+import { Powerup } from 'src/sprites/powerup';
+import { Effect } from 'src/effects/effect';
 
 export class Powerups extends Phaser.Group {
   constructor(game, spawnChance) {
     super(game, null, 'powerups', false, true, Phaser.Physics.ARCADE);
-
-    this.powerups = [ PaddleSpeedPowerup, WiderPaddlePowerup ];
+    this.classType = Powerup;
     this.spawnChance = spawnChance;
+
+    this.types = [
+      ['wider-paddle', new Effect('paddle', {
+        width: 150,
+        tint: 0x22CC33,
+      })],
+      ['speed-up', new Effect('paddle', {
+        speed: 400,
+        tint: 0x22CC33,
+      })],
+    ]
   }
 
   spawnFromBrick(brick) {
     const { worldPosition: position } = brick;
     if (this.game.rnd.frac() < this.spawnChance) {
-      const PowerupClass = this.game.rnd.pick(this.powerups);
-
-      const powerup = new PowerupClass(this.game, position.x, position.y);
+      const powerup = new Powerup(this.game, position.x, position.y, ...this.game.rnd.pick(this.types))
       this.add(powerup);
       powerup.startMovement();
     }
