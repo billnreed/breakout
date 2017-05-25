@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 import { Powerup } from 'src/sprites/powerup';
-import { Effect } from 'src/effects/effect';
+import { PaddleEffect } from 'src/effects/paddle-effect';
 
 export class Powerups extends Phaser.Group {
   constructor(game, spawnChance) {
@@ -10,11 +10,11 @@ export class Powerups extends Phaser.Group {
     this.spawnChance = spawnChance;
 
     this.types = [
-      ['wider-paddle', new Effect('paddle', {
+      ['wider-paddle', new PaddleEffect({
         width: 150,
         tint: 0x22CC33,
       })],
-      ['speed-up', new Effect('paddle', {
+      ['speed-up', new PaddleEffect({
         speed: 400,
         tint: 0x22CC33,
       })],
