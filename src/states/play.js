@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
 
 import { LevelLoader } from 'src/util/level-loader';
+import { EffectManager } from 'src/effects/effect-manager';
 
 import { Ball } from 'src/sprites/ball';
 import { Paddle } from 'src/sprites/paddle';
@@ -28,6 +29,7 @@ export class PlayState extends Phaser.State {
     this.initCollisionHandlers();
 
     this.initInputHandlers();
+    this.createManagers();
 
     this.prepareInitialRound();
   }
@@ -88,6 +90,10 @@ export class PlayState extends Phaser.State {
     this.paddle.setRightInputKey(inputKeys.right);
 
     this.spaceKey = inputKeys.spacebar;
+  }
+
+  createManagers() {
+    this.game.effectManager = new EffectManager(this.game);
   }
 
   prepareInitialRound() {

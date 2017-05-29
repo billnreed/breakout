@@ -19,12 +19,6 @@ export class Powerup extends Phaser.Sprite {
   }
 
   activate() {
-    this.effect.activate();
-
-    this.game.time.events.add(3000, this.deactivate.bind(this));
-  }
-
-  deactivate() {
-    this.effect.deactivate();
+    this.game.effectManager.activateEffect(this.effect);
   }
 }

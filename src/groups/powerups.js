@@ -12,11 +12,9 @@ export class Powerups extends Phaser.Group {
     this.types = [
       ['wider-paddle', new PaddleEffect({
         width: 150,
-        tint: 0x22CC33,
       })],
       ['speed-up', new PaddleEffect({
         speed: 400,
-        tint: 0x22CC33,
       })],
     ]
   }
