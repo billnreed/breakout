@@ -7,14 +7,10 @@ export class Effect {
   }
 
   activate() {
-    Object.keys(this.properties).forEach(property => {
-      EntityConfig[this.entityKey][property] = this.properties[property];
-    });
+    EntityConfig.set(this.entityKey, this.properties)
   }
 
   deactivate() {
-    Object.keys(this.properties).forEach(property => {
-      EntityConfig[this.entityKey][property] = EntityConfig.defaults[this.entityKey][property];
-    });
+    EntityConfig.reset(this.entityKey, Object.keys(this.properties));
   }
 }
