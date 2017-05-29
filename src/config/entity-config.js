@@ -17,7 +17,7 @@ class _EntityConfig {
 
   set(entityKey, data) {
     const entityProperties = this[entityKey];
-    
+
     Object.keys(data).forEach(property => {
       entityProperties[property] = data[property];
     });
