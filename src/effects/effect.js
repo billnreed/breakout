@@ -5,12 +5,4 @@ export class Effect {
     this.entityKey = entityKey;
     this.properties = properties;
   }
-
-  activate() {
-    EntityConfig.set(this.entityKey, this.properties)
-  }
-
-  deactivate() {
-    EntityConfig.reset(this.entityKey, Object.keys(this.properties));
-  }
 }
